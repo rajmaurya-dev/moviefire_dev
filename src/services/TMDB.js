@@ -1,10 +1,10 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
 const tmdbApiKey = import.meta.env.VITE_APP_TMDB_KEY;
-const appName = import.meta.env.VITE_APP_TITLE;
+// const appName = import.meta.env.VITE_APP_TITLE;
 
 // movie/popular?api_key=<<api_key>>&language=en-US&page=1
-console.log(`The app name is ${appName} and api key is ${tmdbApiKey}`);
+// console.log(`The app name is ${appName} and api key is ${tmdbApiKey}`);
 export const tmdbApi = createApi({
   reducerPath: 'tbdbApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3' }),

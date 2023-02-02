@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Box, CircularProgress, useMediaQuery, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+
+import { useGetMoviesQuery } from '../../services/TMDB';
+import { MovieList } from '..';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 const Movies = () => {
-  console.log('Movies');
+  const [page, setPage] = useState(1);
+  const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.currentGenreOrCategory);
+  const { data, error, isFetching } = useGetMoviesQuery({ genreIdOrCategoryName, page, searchQuery });
+  if (isFetching) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size="4rem" />
+      </Box>
+    );
+  }
+  if (!data.results.length) {
+    return (
+      <Box display="flex" alignItems="center" mt="20px" justifyContent="center">
+        <Typography variant="h4">NO MOVIE THAT MATCHES THE NAME </Typography>
+      </Box>
+    );
+  }
+
+  if (error) return 'An Error Has Occurred';
 
   return (
-    <div>Movies</div>
+    <div>
+      <MovieList movies={data} />
+    </div>
   );
 };
 

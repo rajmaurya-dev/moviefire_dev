@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
-import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Drawer,
+  Button,
+  Avatar,
+  useMediaQuery,
+} from '@mui/material';
+import {
+  Menu,
+  AccountCircle,
+  Brightness4,
+  Brightness7,
+} from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +24,7 @@ import { setUser, userSelector } from '../../features/auth';
 
 const token = localStorage.getItem('request_token');
 const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+
 const NavBar = () => {
   const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,12 +39,16 @@ const NavBar = () => {
       if (token) {
         if (sessionIdFromLocalStorage) {
           console.log('1');
-          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionIdFromLocalStorage}`);
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionIdFromLocalStorage}`,
+          );
           dispatch(setUser(userData));
         } else {
           console.log('101');
           const sessionId = await createSessionId();
-          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionId}`);
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionId}`,
+          );
           dispatch(setUser(userData));
         }
       }
@@ -43,16 +61,16 @@ const NavBar = () => {
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           {isMobile && (
-          <IconButton
-            color="inherit"
-            edge="start"
-            style={{ outline: 'none' }}
-            onClick={() => setMobileOpen((prevMobileOpen) => !prevMobileOpen)}
-            className={classes.menuButton}
-          >
-            <Menu />
-          </IconButton>
-          ) }
+            <IconButton
+              color="inherit"
+              edge="start"
+              style={{ outline: 'none' }}
+              onClick={() => setMobileOpen((prevMobileOpen) => !prevMobileOpen)}
+              className={classes.menuButton}
+            >
+              <Menu />
+            </IconButton>
+          )}
           <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
@@ -63,9 +81,19 @@ const NavBar = () => {
                 Login &nbsp; <AccountCircle />
               </Button>
             ) : (
-              <Button color="inherit" component={Link} to={`/profile/${user.id}`} className={classes.linkButton} onClick={() => {}}>
-                {!isMobile && <> Movies &nbsp;</> }
-                <Avatar style={{ width: 30, height: 30 }} alt="profile" src="https://www.w3schools.com/howto/img_avatar.png" />
+              <Button
+                color="inherit"
+                component={Link}
+                to={`/profile/${user.id}`}
+                className={classes.linkButton}
+                onClick={() => {}}
+              >
+                {!isMobile && <> Movies &nbsp;</>}
+                <Avatar
+                  style={{ width: 30, height: 30 }}
+                  alt="profile"
+                  src="https://www.w3schools.com/howto/img_avatar.png"
+                />
               </Button>
             )}
           </div>
@@ -86,7 +114,11 @@ const NavBar = () => {
               <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
           ) : (
-            <Drawer classes={{ paper: classes.drawerPaper }} variant="permanent" open>
+            <Drawer
+              classes={{ paper: classes.drawerPaper }}
+              variant="permanent"
+              open
+            >
               <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
           )}

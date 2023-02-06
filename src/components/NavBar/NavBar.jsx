@@ -9,6 +9,8 @@ import { Search, Sidebar } from '..';
 import { fetchToken, createSessionId, moviesApi } from '../../utils';
 import { setUser, userSelector } from '../../features/auth';
 
+const token = localStorage.getItem('request_token');
+const sessionIdFromLocalStorage = localStorage.getItem('session_id');
 const NavBar = () => {
   const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -17,8 +19,7 @@ const NavBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   console.log(user);
-  const token = localStorage.getItem('request_token');
-  const sessionIdFromLocalStorage = localStorage.getItem('request_token');
+
   useEffect(() => {
     const logInUser = async () => {
       if (token) {

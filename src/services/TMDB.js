@@ -32,10 +32,16 @@ export const tmdbApi = createApi({
         return `movie/popular?&api_key=${tmdbApiKey}&language=en-US&${page}`;
       },
     }),
+
+    //* get movies
+    getMovie: builder.query({
+      query: (id) => `/movie/${id}?append_to_response=videos,credits&api_key=${tmdbApiKey}`,
+    }),
   }),
 });
 
 export const {
   useGetGenresQuery,
   useGetMoviesQuery,
+  useGetMovieQuery,
 } = tmdbApi;

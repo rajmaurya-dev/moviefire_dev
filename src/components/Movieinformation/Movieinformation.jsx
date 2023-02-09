@@ -4,15 +4,17 @@ import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBord
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useGetMovieQuery } from '../../services/TMDB';
+import { useGetMovieQuery, useGetRecommendationQuery } from '../../services/TMDB';
 import useStyles from './styles';
 import genreIcons from '../../assets/assets';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+import { MovieList } from '..';
 
 const Movieinformation = () => {
   console.log('Movie Information');
   const { id } = useParams();
   const { data, isFetching, error } = useGetMovieQuery(id);
+  const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationQuery({ list: '/recommendations', movie_id: id });
   const classes = useStyles();
   const dispatch = useDispatch();
   const addToFavorites = () => {};
@@ -110,6 +112,18 @@ const Movieinformation = () => {
           </div>
         </Grid>
       </Grid>
+      <Box marginTop="5rem" width="100%">
+        <Typography
+          variant="h3"
+          gutterBottom
+          align="center"
+        >
+          You might also like
+        </Typography>
+        {recommendations
+          ? <MovieList numberOfMovies="12" movies={recommendations} />
+          : <Box>Sorry Nothing Was Found</Box>}
+      </Box>
     </Grid>
   );
 };

@@ -57,7 +57,7 @@ export default makeStyles((theme) => ({
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
-      marginLeft: '50px',
+      // marginLeft: '50px',
     },
   },
   modal: {

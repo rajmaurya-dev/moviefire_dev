@@ -56,7 +56,7 @@ const Movieinformation = () => {
             <Rating readOnly value={data.vote_average / 2} />
             <Typography variant="subtitle1" gutterBottom style={{ marginLeft: '8px' }}>{data?.vote_average.toFixed(1)} / 10</Typography>
           </Box>
-          <Typography variant="h6" align="center" gutterBottom>{data?.runtime}min  {data?.spoken_languages.length > 0 ? `/ ${data?.spoken_languages[0].name}` : '' }</Typography>
+          <Typography variant="h6" align="center" gutterBottom>{data?.runtime}min | Language: {data?.spoken_languages[0].name}</Typography>
         </Grid>
 
         <Grid item className={classes.genresContainer}>

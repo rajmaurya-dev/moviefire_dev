@@ -20,11 +20,17 @@ export const tmdbApi = createApi({
           return `/search/movie?query=${searchQuery}&page=${page}&api_key=${tmdbApiKey}`;
         }
         //* get movies by categories
-        if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {
+        if (
+          genreIdOrCategoryName
+          && typeof genreIdOrCategoryName === 'string'
+        ) {
           return `movie/${genreIdOrCategoryName}?page=${page}&api_key=${tmdbApiKey}`;
         }
         //* get movies by genre
-        if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'number') {
+        if (
+          genreIdOrCategoryName
+          && typeof genreIdOrCategoryName === 'number'
+        ) {
           console.log('here');
           return `discover/movie?with_genres=${genreIdOrCategoryName}&page=${page}&api_key=${tmdbApiKey}`;
         }
@@ -43,6 +49,16 @@ export const tmdbApi = createApi({
       query: ({ movie_id, list }) => `/movie/${movie_id}/${list}?api_key=${tmdbApiKey}`,
     }),
 
+    //* Get actors info
+    getActor: builder.query({
+      query: (id) => `/person/${id}?api_key=${tmdbApiKey}&language=en-US`,
+    }),
+
+    //* Get movies by actor id
+    getMoviesByActorId: builder.query({
+      query: ({ id, page }) => `/discover/movie?with_cast=${id}&page=${page}&api_key=${tmdbApiKey}`,
+    }),
+
   }),
 });
 
@@ -51,4 +67,6 @@ export const {
   useGetMoviesQuery,
   useGetMovieQuery,
   useGetRecommendationQuery,
+  useGetActorQuery,
+  useGetMoviesByActorIdQuery,
 } = tmdbApi;

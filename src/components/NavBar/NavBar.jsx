@@ -32,19 +32,16 @@ const NavBar = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
   const dispatch = useDispatch();
-  console.log(user);
 
   useEffect(() => {
     const logInUser = async () => {
       if (token) {
         if (sessionIdFromLocalStorage) {
-          console.log('1');
           const { data: userData } = await moviesApi.get(
             `/account?session_id=${sessionIdFromLocalStorage}`,
           );
           dispatch(setUser(userData));
         } else {
-          console.log('101');
           const sessionId = await createSessionId();
           const { data: userData } = await moviesApi.get(
             `/account?session_id=${sessionId}`,

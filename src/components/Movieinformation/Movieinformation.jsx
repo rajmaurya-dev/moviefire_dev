@@ -124,7 +124,6 @@ const Movieinformation = () => {
           ? <MovieList numberOfMovies="12" movies={recommendations} />
           : <Box>Sorry Nothing Was Found</Box>}
       </Box>
-      {console.log(data)}
       <Modal
         closeAfterTransition
         className={classes.modal}

@@ -1,3 +1,4 @@
+import { TwoMpSharp } from '@mui/icons-material';
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
 const tmdbApiKey = import.meta.env.VITE_APP_TMDB_KEY;
@@ -45,6 +46,10 @@ export const tmdbApi = createApi({
     }),
 
     //* Get User Specific Movies
+    getList: builder.query({
+      query: ({ listName, accountId, sessionId, page }) => `/account/${accountId}/${listName}?api_key=${tmdbApiKey}&session_id=${sessionId}&page=${page}`,
+    }),
+
     getRecommendation: builder.query({
       query: ({ movie_id, list }) => `/movie/${movie_id}/${list}?api_key=${tmdbApiKey}`,
     }),
@@ -66,6 +71,7 @@ export const {
   useGetGenresQuery,
   useGetMoviesQuery,
   useGetMovieQuery,
+  useGetListQuery,
   useGetRecommendationQuery,
   useGetActorQuery,
   useGetMoviesByActorIdQuery,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   AppBar,
   IconButton,
@@ -19,6 +19,7 @@ import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import { Search, Sidebar } from '..';
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 import { fetchToken, createSessionId, moviesApi } from '../../utils';
 import { setUser, userSelector } from '../../features/auth';
 
@@ -28,6 +29,8 @@ const sessionIdFromLocalStorage = localStorage.getItem('session_id');
 const NavBar = () => {
   const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const colorMode = useContext(ColorModeContext);
+
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
@@ -68,7 +71,7 @@ const NavBar = () => {
               <Menu />
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
+          <IconButton color="inherit" sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
           {!isMobile && <Search />}
